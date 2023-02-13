@@ -39,8 +39,10 @@ export class SocketEventsMannager {
   onOpen(pairName: string) {
     this.logger.log(`${pairName} webSocket: established connection`);
 
+    // Set pair connection in true
     this.pairs[pairName].wsConnected = true;
 
+    // Suscribe to the pair channel
     this.subscribeToMarket(pairName);
   }
 
@@ -62,7 +64,7 @@ export class SocketEventsMannager {
       parsedMessage,
       this.pairs[pairName],
     );
-    console.log(this.pairs[pairName].messageType);
+
     // If there's a resolveCallback function and a parsed message
     if (resolveCallback && this.pairs[pairName].messageType === 'snapShot') {
       // Resolve the promise with the parsed message

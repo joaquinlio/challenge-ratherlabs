@@ -30,3 +30,62 @@ $ npm run test
 # test coverage
 $ npm run test:cov
 ```
+
+### Why did I decide to connecting and subscribing to the channel when get the first request
+
+When receiving a high volume of requests per second or minute, connecting and subscribing to the websocket on each request can consume a lot of resources and negatively impact performance.
+
+To overcome this issue, it's recommended to connect and subscribe to the channel when get the first request and keep the connection open to efficiently respond to requests. By doing this, the connection to the websocket will only be established once and will persist for the lifetime of the application. This eliminates the overhead of establishing a new connection for each request and reduces the overall load on the system.
+
+In summary, connecting and subscribing to the channel when get the first request is more performant when dealing with a high volume of requests as it reduces the resources consumed and improves the overall performance of the system.
+
+## Example Request:
+
+In this example, the endpoint is being queried for the Order Book data for the pair BTC-USD. The response includes the ask and bid arrays, which represent the prices and sizes of the sell and buy orders, respectively.
+
+```bash
+GET /orderbook/BTC-USD
+```
+
+## Example Response:
+
+```yalm
+{
+    "bids": [
+        [8000, 1.5],
+        [7999, 0.5]
+    ],
+    "asks": [
+        [8001, 0.7],
+        [8002, 2.3]
+    ]
+}
+```
+
+## Example Request:
+
+In this example, the endpoint is being used to simulate a trade order. The request includes the pairName, operationType, amount, and priceLimit in the request body. The response includes the effectivePrice and orderSize, which represent the price at which the order was executed and the size of the order.
+
+```bash
+POST /order/trade
+```
+
+### Body
+
+```bash
+{
+    "pairName": "BTCUSD",
+    "operationType": "buy",
+    "amount": 10,
+    "priceLimit": 30000
+}
+```
+
+## Example Response:
+
+```bash
+{
+    "effectivePrice": 30000,
+    "orderSize": 1.372655092648243
+}
+```
