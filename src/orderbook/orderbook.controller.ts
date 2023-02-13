@@ -15,7 +15,7 @@ export class OrderbookController {
   constructor(@Inject(SocketService) private socketService: SocketService) {}
 
   @Get(':pairName')
-  async getPairTips(
+  async getOrderbook(
     @Param() params: OrderbookDto,
   ): Promise<Orderbook.orderbook | HttpException> {
     try {

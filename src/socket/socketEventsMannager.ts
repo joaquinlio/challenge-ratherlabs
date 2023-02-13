@@ -1,14 +1,16 @@
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import * as WebSocket from 'ws';
-import { buildOrderbook } from './orderbookBuilder';
+import { buildOrderbook } from '../utils/orderbookBuilder';
 
 export class SocketEventsMannager {
   private logger: Logger;
   private wsClient: WebSocket;
   private pairs: Orderbook.pairs;
-  constructor(logger: Logger, pairs: Orderbook.pairs) {
+  private wsUrl: string;
+  constructor(logger: Logger, pairs: Orderbook.pairs, wsUrl: string) {
     this.logger = logger;
     this.pairs = pairs;
+    this.wsUrl = wsUrl;
   }
   assignEventListeners(
     wsClient: WebSocket,
@@ -60,9 +62,9 @@ export class SocketEventsMannager {
       parsedMessage,
       this.pairs[pairName],
     );
-
+    console.log(this.pairs[pairName].messageType);
     // If there's a resolveCallback function and a parsed message
-    if (resolveCallback && this.pairs[pairName].messageType == 'snapShot') {
+    if (resolveCallback && this.pairs[pairName].messageType === 'snapShot') {
       // Resolve the promise with the parsed message
       resolveCallback(this.pairs[pairName].orderbook);
 
@@ -79,7 +81,7 @@ export class SocketEventsMannager {
     // Retries the connection to the WebSocket API after 1 second
     setTimeout(() => {
       this.logger.log(`Retrying the connection to ${pairName} webSocket...`);
-      this.wsClient = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
+      this.wsClient = new WebSocket(this.wsUrl);
 
       this.assignEventListeners(this.wsClient, pairName, false);
     }, 1000);

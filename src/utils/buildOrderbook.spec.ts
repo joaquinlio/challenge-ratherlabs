@@ -24,9 +24,10 @@ describe('BuildOrderbook', () => {
         bids: {},
       };
 
-      const result = await buildOrderbook(wsMessage, {
+      const result = buildOrderbook(wsMessage, {
         orderbook,
         messageType: 'snapShot',
+        wsConnected: false,
       });
 
       expect(result).toEqual({
@@ -42,9 +43,10 @@ describe('BuildOrderbook', () => {
         bids: { '10': { price: 10, amount: 5 } },
       };
       expect(
-        await buildOrderbook(wsMessage, {
+        buildOrderbook(wsMessage, {
           orderbook,
           messageType: 'update',
+          wsConnected: false,
         }),
       ).toEqual({
         asks: { '10': { price: 10, amount: 30 } },
@@ -62,6 +64,7 @@ describe('BuildOrderbook', () => {
         await buildOrderbook(wsMessage, {
           orderbook: orderbook,
           messageType: 'update',
+          wsConnected: false,
         }),
       ).toEqual({
         asks: {},

@@ -45,7 +45,7 @@ describe('OrderbookController', () => {
         .spyOn(service, 'getOrderbookByPairName')
         .mockImplementation(orderbook);
 
-      expect(await controller.getPairTips({ pairName: 'BTCUSD' })).toEqual(
+      expect(await controller.getOrderbook({ pairName: 'BTCUSD' })).toEqual(
         mockResponse,
       );
     });
@@ -60,7 +60,7 @@ describe('OrderbookController', () => {
         .mockRejectedValue(orderbook);
 
       try {
-        await controller.getPairTips({ pairName: 'BTCUSD' });
+        await controller.getOrderbook({ pairName: 'BTCUSD' });
       } catch (error) {
         expect(error.message).toBe('Http Exception');
       }

@@ -1,10 +1,7 @@
 declare namespace Orderbook {
   export interface pair {
     wsConnected: boolean;
-    orderbook: {
-      bids: object;
-      asks: object;
-    };
+    orderbook: orderbook;
     messageType: string;
   }
   export interface pairs {
@@ -15,16 +12,16 @@ declare namespace Orderbook {
   export interface tip {
     price: number;
     amount: number;
-    count: number;
+    count?: number;
   }
 
-  export interface tips {
+  export interface objectTip {
     [key: string]: tip;
   }
 
   export interface orderbook {
-    bids: tip[];
-    asks: tip[];
+    bids: tip[] | objectTip;
+    asks: tip[] | objectTip;
   }
 
   export type type = string;
