@@ -89,3 +89,7 @@ POST /order/trade
     "orderSize": 1.372655092648243
 }
 ```
+
+## How it can be expanded
+
+The current API connects to two predetermined channels, which limits its functionality. To make the channels dynamic, the API will be updated to allow users to specify the channels they want to connect to. This can be done by adding the names of the currency to be used in the app to the env configuration and modifying the connection to the websocket to loop through them and create a connection for each currency.
