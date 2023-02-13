@@ -8,6 +8,14 @@ RatherLabs Challenge
 $ npm install
 ```
 
+## .env example
+```bash
+WEBSOCKET_URL=wss://api.bitfinex.com/ws/2
+PORT=3000
+```
+
+
+
 ## Running the app
 
 ```bash
